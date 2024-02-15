@@ -16,7 +16,9 @@ async fn main() -> std::io::Result<()> {
         Ok(val) => val,
         Err(_) => "5000".to_owned(),
     };
-    println!("CSML Server listening on port {}", server_port);
+
+    let version_server = env!("CARGO_PKG_VERSION");
+    println!("CSML Server {} listening on port {}", version_server, server_port);
 
     // make migrations for PgSQL and do nothing for MongoDB and DynamoDB
     match make_migrations() {
@@ -27,9 +29,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .wrap(
-                Cors::default()
-                    .send_wildcard()
-                    .allowed_methods(vec!["GET", "POST", "DELETE"])
+                Cors::permissive()
+                    //.send_wildcard()
+                    .allowed_methods(vec!["GET", "POST", "OPTIONS", "DELETE"])
                     .allowed_headers(vec![
                         header::AUTHORIZATION,
                         header::ACCEPT,

@@ -1166,7 +1166,7 @@ dependencies = [
 
 [[package]]
 name = "csml_server"
-version = "1.11.2"
+version = "1.11.3"
 dependencies = [
  "actix-cors",
  "actix-files",
